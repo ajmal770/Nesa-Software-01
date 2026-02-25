@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task Report - {{ task.title }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="p-4">
+
+<div class="container">
+
+    <h2 class="mb-4">Task Report</h2>
+
+    <div class="card mb-4">
+        <div class="card-header bg-dark text-white">
+            Task Details
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">{{ task.title }}</h5>
+
+            {% if task.assigned_to %}
+            <p><strong>Assigned To:</strong> {{ task.assigned_to.username }}</p>
+            {% elif task.assigned_users %}
+            <p><strong>Assigned Users:</strong> 
+                {% for user in task.assigned_users.all %}
+                    {{ user.username }}{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            </p>
+            {% endif %}
+
+            <p><strong>Status:</strong>
+                {% if task.completed %}
+                    <span class="badge bg-success">Completed</span>
+                {% else %}
+                    <span class="badge bg-secondary">Pending</span>
+                {% endif %}
+            </p>
+
+            {% if task.description %}
+                <p><strong>Description:</strong> {{ task.description }}</p>
+            {% endif %}
+
+            {% if task.date_assigned %}
+                <p><strong>Date Assigned:</strong> {{ task.date_assigned|date:"d M Y H:i" }}</p>
+            {% endif %}
+
+            {% if task.completed and task.date_completed %}
+                <p><strong>Date Completed:</strong> {{ task.date_completed|date:"d M Y H:i" }}</p>
+            {% endif %}
+
+            {% if task.completion_report %}
+                <p><strong>Completion Report:</strong> {{ task.completion_report }}</p>
+            {% endif %}
+
+            {% if task.worked_hours %}
+                <p><strong>Worked Hours:</strong> {{ task.worked_hours }}</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <a href="{% url 'superadmin_task_reports' %}" class="btn btn-secondary">Back to All Reports</a>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

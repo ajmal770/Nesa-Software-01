@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="p-4">
+
+<div class="container">
+
+    <h2 class="mb-4">Admin Dashboard</h2>
+
+    <!-- Users Section -->
+    <div class="mb-5">
+        <h3>All Users</h3>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.role|capfirst }}</td>
+                        <td>
+                            <a href="{% url 'delete_user' user.id %}" class="btn btn-danger btn-sm"
+                               onclick="return confirm('Are you sure you want to delete this user?');">
+                                Delete
+                            </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="5" class="text-center">No users found.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Tasks Section -->
+    <div class="mb-5">
+        <h3>All Tasks</h3>
+        <a href="{% url 'assign_task' %}" class="btn btn-primary mb-2">Assign Task</a>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Assigned To</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for task in tasks %}
+                    <tr>
+                        <td>{{ task.id }}</td>
+                        <td>{{ task.title }}</td>
+                        <td>{{ task.assigned_to.username }}</td>
+                        <td>
+                            {% if task.status == 'completed' %}
+                                <span class="badge bg-success">Completed</span>
+                            {% elif task.status == 'in_progress' %}
+                                <span class="badge bg-warning text-dark">In Progress</span>
+                            {% else %}
+                                <span class="badge bg-secondary">Pending</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if task.status == 'completed' %}
+                                <a href="{% url 'task_report' task.id %}" class="btn btn-success btn-sm">View Report</a>
+                                <a href="{% url 'delete_task' task.id %}" class="btn btn-danger btn-sm"
+                                   onclick="return confirm('Are you sure you want to delete this task?');">
+                                    Delete
+                                </a>
+                            {% else %}
+                                <a href="{% url 'delete_task' task.id %}" class="btn btn-danger btn-sm"
+                                   onclick="return confirm('Are you sure you want to delete this task?');">
+                                    Delete
+                                </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="5" class="text-center">No tasks assigned yet.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

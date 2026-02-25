@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Tasks</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<div class="container py-5">
+    <h2 class="mb-4">My Tasks</h2>
+
+    {% if tasks %}
+        <table class="table table-striped table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Title</th>
+                    <th>Status</th>
+                    <th>Created At</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for task in tasks %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ task.title }}</td>
+                    <td>
+                        {% if task.status == 'completed' %}
+                            <span class="badge bg-success">Completed</span>
+                        {% else %}
+                            <span class="badge bg-warning text-dark">{{ task.status|capfirst }}</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ task.created_at|date:"d M Y H:i" }}</td>
+                    <td>
+                        {% if task.status != 'completed' %}
+                            <a href="{% url 'update_task' task.id %}" class="btn btn-sm btn-primary">Update</a>
+                            <a href="{% url 'complete_task' task.id %}" class="btn btn-sm btn-success">Complete</a>
+                        {% else %}
+                            <span class="text-muted">No actions</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="alert alert-info">You have no tasks assigned.</div>
+    {% endif %}
+
+    <a href="{% url 'home' %}" class="btn btn-secondary mt-3">Back to Home</a>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

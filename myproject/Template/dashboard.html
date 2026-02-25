@@ -1,0 +1,16 @@
+<tbody>
+{% if users %}
+    {% for user in users %}
+    <tr>
+        <td>{{ user.id }}</td>
+        <td>{{ user.username }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.role }}</td>
+    </tr>
+    {% endfor %}
+{% else %}
+    <tr>
+        <td colspan="5">No users found.</td>
+    </tr>
+{% endif %}
+</tbody>

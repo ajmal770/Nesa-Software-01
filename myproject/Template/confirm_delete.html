@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete User</title>
+    <style>
+        body {
+            background: linear-gradient(to right, #ff4e50, #f9d423);
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .delete-box {
+            background: white;
+            padding: 40px;
+            width: 400px;
+            border-radius: 10px;
+            box-shadow: 0px 10px 25px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        h2 {
+            color: #d63031;
+        }
+
+        p {
+            margin: 20px 0;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .delete-btn {
+            background: #d63031;
+            color: white;
+        }
+
+        .delete-btn:hover {
+            background: #b71c1c;
+        }
+
+        .cancel-btn {
+            background: #636e72;
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+
+        .cancel-btn:hover {
+            background: #2d3436;
+        }
+    </style>
+</head>
+<body>
+
+<div class="delete-box">
+    <h2>Confirm Delete</h2>
+    <p>Are you sure you want to delete user:</p>
+    <strong>{{ user.username }}</strong>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="delete-btn">Yes, Delete</button>
+        <a href="{% url 'superadmin_dashboard' %}" class="cancel-btn">Cancel</a>
+    </form>
+</div>
+
+</body>
+</html>

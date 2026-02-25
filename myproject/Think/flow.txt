@@ -1,0 +1,72 @@
+myproject/
+│
+├── myapp/
+│   ├── __init__.py
+│   ├── models.py
+│   │   ├── CustomUser (extends AbstractUser)
+│   │   │   ├─ role (superadmin/admin/user)
+│   │   └─ assigned_admin (for users assigned to an admin)
+│   │
+│   │   └── Task
+│   │       ├─ title, description, due_date
+│   │       ├─ assigned_to (CustomUser FK)
+│   │       ├─ status (pending/in_progress/completed)
+│   │       ├─ completion_report, worked_hours
+│   │       └─ created_at, updated_at
+│   │
+│   ├── forms.py
+│   │   ├─ TaskForm           # Create/edit tasks
+│   │   ├─ TaskCompletionForm # Submit completion report + worked hours
+│   │   └─ UserForm           # SuperAdmin: create/edit users/admins
+│   │
+│   ├── serializers.py
+│   │   ├─ TaskSerializer           # Full task data for API
+│   │   └─ TaskCompletionSerializer # Update status + completion
+│   │
+│   ├── views.py
+│   │   ├─ Task Views (User API)
+│   │   │   ├─ complete_task (User completes task)
+│   │   │   ├─ UserTasksView (GET all tasks assigned to logged-in user)
+│   │   │   ├─ UpdateTaskView (PUT to update task status)
+│   │   │   └─ TaskReportView (Admins/SuperAdmins see reports)
+│   │   │
+│   │   ├─ JWT Views
+│   │   │   └─ MyTokenObtainPairView
+│   │   │
+│   │   ├─ SuperAdmin Views
+│   │   │   ├─ superadmin_dashboard
+│   │   │   ├─ create_user
+│   │   │   ├─ delete_user
+│   │   │   └─ view_task_reports
+│   │   │
+│   │   ├─ Admin Views
+│   │   │   ├─ admin_dashboard
+│   │   │   └─ assign_task
+│   │   │
+│   │   └─ Helper
+│   │       └─ check_permission(user, task)
+│   │
+│   ├── urls.py
+│   │   ├─ Task API routes
+│   │   ├─ JWT routes
+│   │   ├─ SuperAdmin dashboard routes
+│   │   └─ Admin dashboard routes
+│   │
+│   └── templates/
+│       ├─ admin_panel/
+│       │   ├─ superadmin_dashboard.html
+│       │   ├─ admin_dashboard.html
+│       │   ├─ create_user.html
+│       │   ├─ assign_task.html
+│       │   └─ task_reports.html
+│       │
+│       └─ tasks/
+│           ├─ complete_task.html
+│           └─ task_reports.html
+│
+├── myproject/
+│   ├── settings.py
+│   ├── urls.py  # Includes myapp.urls
+│   └── wsgi.py
+│
+└── manage.py
