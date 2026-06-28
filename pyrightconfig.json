@@ -1,0 +1,10 @@
+{
+    "extraPaths": [
+        "myproject"
+    ],
+    "executionEnvironments": [
+        {
+            "root": "myproject"
+        }
+    ]
+}
